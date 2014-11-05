@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Turncard.Js</title>
+</head>
+
+<body>
+    <div>
+        <blockquote>
+            <div id="card-demo"></div>
+        </blockquote>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-2.1.1.js"></script>
+    <script src="turncard-obj.js"></script>
+    <script>
+        //创建一个翻牌的Demo
+        var trunCardDemo = new TurnCard({
+            //翻牌主Dom容器
+            cardContainer: $('#card-demo'),
+            //是否自动开始翻牌
+            autoStart: true,
+            //卡牌尺寸
+            cardSize: 155,
+            //卡牌间隙
+            cardGap: 5,
+            //卡牌图片
+            imgGroup: ['get-2', 'get-22', 'get-222', 'miss-1', 'get-2222', 'miss-1', 'get-2', 'get-22', 'get-2'],
+            //卡牌图片路径
+            imgPath: 'css/img/',
+            //翻牌就绪的响应事件
+            onCardsReady: function() {
+                var prize = Math.round(Math.random() * (this.imgGroup.length - 1));
+                //设置翻开的结果
+                trunCardDemo.prizeImage = this.imgGroup[prize];
+            },
+            //卡牌被翻开的响应事件
+            onCardDiscovered: function() {
+                setTimeout(function() {
+                    //重新洗牌，并就绪
+                    trunCardDemo.trigger('cardsReady');
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+
+</html>
